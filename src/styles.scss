@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import './theme';
+@include mat-core();
+
+$my-app-primary: mat-palette($md-bspwa-primary);
+$my-app-accent:  mat-palette($md-bspwa-accent);
+$my-app-warn:    mat-palette($md-bspwa-warn);
+
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+
+@include angular-material-theme($my-app-theme);
+
+// Global styles
+body {
+    margin: 0;
+}

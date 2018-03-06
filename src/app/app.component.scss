@@ -1,0 +1,16 @@
+.mat-toolbar.mat-primary {
+    color: #fff;
+}
+
+.subtitle, .no-results {
+    padding: 15px 15px 0 15px;
+    margin: 0;
+}
+
+.form-wrapper {
+    margin-bottom: 20px;
+    .mat-form-field {
+        display: block;
+        margin: 15px;
+    }
+}
