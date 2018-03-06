@@ -8,20 +8,49 @@
 
 <form class="form-wrapper">
   <mat-form-field>
-    <input matInput placeholder="Start Typing" #search maxlength="40" minLength="3" [value]="searchText" [formControl]="searchTextControl">
-    <mat-hint align="start"><strong>Use commas for multiple matches</strong></mat-hint>
-    <mat-hint align="end">{{search.value.length}} / 40</mat-hint>
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let searchChip of searchChips" [selectable]="selectable"
+              [removable]="'true'" (remove)="remove(searchChip)">
+        {{searchChip.name}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input matChipInput placeholder="Start Typing" 
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="'true'"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
   </mat-form-field>
 </form>
 
 <mat-divider></mat-divider>
 
-<div class="results" *ngIf="results mat-typography">
-
+<div class="results mat-typography" *ngIf="results.length > 0">
+  <mat-accordion>
+    <!-- <virtual-scroll #scroll [items]="results"> -->
+      <mat-expansion-panel *ngFor="let refVerse of results">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+              {{refVerse.book}} {{refVerse.reference}}
+          </mat-panel-title>
+          <mat-panel-description>
+              {{refVerse.verseSummary}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>{{refVerse.verse}}</p>
+      </mat-expansion-panel>
+    <!-- </virtual-scroll> -->
+  </mat-accordion>
+  <!-- <mat-list>
+    <mat-list-item *ngFor="let refVerse of results">
+      <h4 mat-line>{{refVerse.book}} - {{refVerse.reference}}</h4>
+      <p mat-line>{{refVerse.verse}}</p>
+    </mat-list-item>
+  </mat-list> -->
 </div>
 
-<div class="no-results mat-typography">
-  <h3>No results for now...</h3>
+<div class="no-results mat-typography" *ngIf="results.length == 0">
+  <h3>Use enter, comma, or tab to search more terms</h3>
 </div>
 
 <!-- Don't need this for now -->

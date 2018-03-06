@@ -14,3 +14,22 @@
         margin: 15px;
     }
 }
+
+/deep/ .mat-snack-bar-handset .mat-snack-bar-container {
+    width: 130px !important;
+    min-width: 130px !important;
+    max-width: 130px !important;
+    float: right !important;
+    .mat-simple-snackbar {
+        display: block;
+        text-align: center;
+    }
+}
+
+.mat-expansion-panel-header-description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: normal;
+    width: calc(100% - 185px);
+    white-space: nowrap;
+}
