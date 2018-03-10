@@ -21,6 +21,7 @@ export class RefVerse {
   reference: string;
   verse: string;
   verseSummary: string;
+  expanded: boolean;
 }
 
 // {

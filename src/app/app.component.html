@@ -1,6 +1,12 @@
 <div class="mat-typography">
-  <mat-toolbar color="primary">
+  <mat-toolbar class="top-bar" color="primary">
     <span>{{ title }}</span>
+    <mat-slide-toggle
+        [disabled]="results.length == 0"
+        [color]="'accent'"
+        (change)="toggleSlider($event)">
+      Expand All
+    </mat-slide-toggle>
   </mat-toolbar>
   
   <h3 class="subtitle" *ngIf="showIntro">Ok, ok, we just support the King James Version for now... Maybe that will change someday...</h3>
@@ -26,21 +32,19 @@
 <mat-divider></mat-divider>
 
 <div class="results mat-typography" *ngIf="results.length > 0">
-  <mat-accordion>
-    <!-- <virtual-scroll #scroll [items]="results"> -->
-      <mat-expansion-panel *ngFor="let refVerse of results">
+  <virtual-scroll [items]="results" [childHeight]="43" (update)="viewPortItems = $event" (change)="indices = $event">
+    <mat-accordion [multi]="'true'">
+      <mat-expansion-panel *ngFor="let refVerse of viewPortItems" [expanded]="refVerse.expanded">
         <mat-expansion-panel-header>
-          <mat-panel-title>
-              {{refVerse.book}} {{refVerse.reference}}
+          <mat-panel-title [innerHTML]="refVerse.book + refVerse.reference">
           </mat-panel-title>
-          <mat-panel-description>
-              {{refVerse.verseSummary}}
+          <mat-panel-description [innerHTML]="refVerse.verseSummary">
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>{{refVerse.verse}}</p>
+        <p [innerHTML]="refVerse.verse"></p>
       </mat-expansion-panel>
-    <!-- </virtual-scroll> -->
-  </mat-accordion>
+    </mat-accordion>
+  </virtual-scroll>
   <!-- <mat-list>
     <mat-list-item *ngFor="let refVerse of results">
       <h4 mat-line>{{refVerse.book}} - {{refVerse.reference}}</h4>

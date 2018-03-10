@@ -8,6 +8,7 @@ import 'rxjs/add/observable/fromEvent';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { BibleSearchService, RefVerse } from './bible-search-service/bible-search.service';
 
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit {
 
   // Chips
   separatorKeysCodes = [ENTER, COMMA];
-  searchChips = [];
+  searchChips = new Array<any>();
 
   // Results
   results: RefVerse[] = [];
@@ -41,18 +42,7 @@ export class AppComponent implements OnInit {
     public snackBar: MatSnackBar
   ) { }
 
-  ngOnInit() {
-    // this.searchTextControl.valueChanges
-    //   .debounceTime(1000)
-    //   .subscribe(newValue => {
-    //     if (this.searchTextControl.status == 'INVALID' || newValue.length == 0) {
-    //       console.log('Invalid input: ' + JSON.stringify(this.searchTextControl.errors));
-    //       this.results = [];
-    //     } else {
-    //       this.search(newValue);
-    //     }
-    //   });
-  }
+  ngOnInit() { }
 
   private search(text: string) {
     if (this.lastSearch == text || text.length < 3) {
@@ -66,7 +56,7 @@ export class AppComponent implements OnInit {
     this.searchService.search(text)
       .subscribe(data => {
         this.results = this.setReferenceSummary(data);
-        // this.renderMaxResults();
+        this.highlightSearchTextInResults();
         this.snackBar.open(data.length + ' results', '', {
           horizontalPosition: 'end',
           verticalPosition: 'top',
@@ -75,6 +65,21 @@ export class AppComponent implements OnInit {
       }, err => {
         this.snackBar.open(err.error, 'Search Error');
       });
+  }
+
+  private highlightSearchTextInResults() {
+    this.results.forEach(result => {
+      this.searchChips.forEach(chip => {
+        result.verse = this.wrapWithStyle(result.verse, chip.name);
+        result.verseSummary = this.wrapWithStyle(result.verseSummary, chip.name);
+        result.book = this.wrapWithStyle(result.book, chip.name);
+        result.reference = this.wrapWithStyle(result.reference, chip.name);
+      });
+    });
+  }
+
+  private wrapWithStyle(verse: string, searchText: string): string {
+    return verse.replace(new RegExp(searchText, 'gi'), '<span class="highlight">' + searchText + '</span>');
   }
 
   private setReferenceSummary(refVerses: RefVerse[]): RefVerse[] {
@@ -126,11 +131,20 @@ export class AppComponent implements OnInit {
     this.search(textFromChips);
   }
 
-  // private renderMaxResults() {
-  //   if (this.resultsRaw.length <= this.maxRenderCount) {
-  //     this.results = this.resultsRaw;
-  //   } else {
-  //     this.results = this.resultsRaw.slice(0, this.maxRenderCount);
-  //   }
-  // }
+  // Toggle Slider
+  toggleSlider(sliderState: MatSlideToggleChange) {
+    if (sliderState.checked) {
+      this.expandAll();
+    } else {
+      this.collapseAll();
+    }
+  }
+
+  private expandAll() {
+    this.results.forEach(result => result.expanded = true);
+  }
+
+  private collapseAll() {
+    this.results.forEach(result => result.expanded = false);
+  }
 }
