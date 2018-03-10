@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 
 // Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -26,6 +27,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { BibleSearchService } from './bible-search-service/bible-search.service';
 
+import 'hammerjs';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -36,6 +39,7 @@ import { BibleSearchService } from './bible-search-service/bible-search.service'
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    MatButtonModule,
     MatChipsModule,
     MatDividerModule,
     MatExpansionModule,

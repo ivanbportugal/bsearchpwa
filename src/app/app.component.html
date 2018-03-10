@@ -27,6 +27,9 @@
         (matChipInputTokenEnd)="add($event)">
     </mat-chip-list>
   </mat-form-field>
+  <button mat-icon-button color="accent" (click)="clearChips()">
+    <mat-icon aria-label="Clear Chips">close</mat-icon>
+  </button>
 </form>
 
 <mat-divider></mat-divider>
@@ -36,7 +39,7 @@
     <mat-accordion [multi]="'true'">
       <mat-expansion-panel *ngFor="let refVerse of viewPortItems" [expanded]="refVerse.expanded">
         <mat-expansion-panel-header>
-          <mat-panel-title [innerHTML]="refVerse.book + refVerse.reference">
+          <mat-panel-title [innerHTML]="refVerse.book + '&nbsp;' + refVerse.reference">
           </mat-panel-title>
           <mat-panel-description [innerHTML]="refVerse.verseSummary">
           </mat-panel-description>

@@ -14,9 +14,12 @@
 
 .form-wrapper {
     margin-bottom: 20px;
+    > * {
+        display: inline-block;
+    }
     .mat-form-field {
-        display: block;
-        margin: 15px;
+        width: calc(100% - 65px);
+        margin: 15px 0 15px 15px;
     }
 }
 
@@ -44,8 +47,8 @@
 }
 
 virtual-scroll {
-    height: calc(100vh - 172px);
+    height: calc(100vh - 187px);
     @media all and (min-width: 600px) {
-        height: calc(100vh - 180px);
+        height: calc(100vh - 195px);
     }
 }

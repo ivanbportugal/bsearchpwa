@@ -57,10 +57,10 @@ export class AppComponent implements OnInit {
       .subscribe(data => {
         this.results = this.setReferenceSummary(data);
         this.highlightSearchTextInResults();
-        this.snackBar.open(data.length + ' results', '', {
+        this.snackBar.open(data.length + ' results', null, {
           horizontalPosition: 'end',
           verticalPosition: 'top',
-          duration: 5000
+          duration: 3000
         });
       }, err => {
         this.snackBar.open(err.error, 'Search Error');
@@ -120,6 +120,11 @@ export class AppComponent implements OnInit {
     } else {
       this.results = [];
     }
+  }
+
+  clearChips() {
+    this.searchChips = new Array<any>();
+    this.results = [];
   }
   
   searchWithChips(chips: Array<Object>) {

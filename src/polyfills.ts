@@ -45,6 +45,8 @@ import 'core-js/es6/set';
 // Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
 import 'core-js/es7/reflect';
 
+import 'hammerjs/hammer';
+
 
 /**
  * Required to support Web Animations `@angular/platform-browser/animations`.
