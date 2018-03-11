@@ -1,12 +1,13 @@
 <div class="mat-typography">
   <mat-toolbar class="top-bar" color="primary">
     <span>{{ title }}</span>
-    <mat-slide-toggle
+    <mat-chip *ngIf="results.length > 0">{{results.length}}</mat-chip>
+    <!-- <mat-slide-toggle
         [disabled]="results.length == 0"
         [color]="'accent'"
         (change)="toggleSlider($event)">
       Expand All
-    </mat-slide-toggle>
+    </mat-slide-toggle> -->
   </mat-toolbar>
   
   <h3 class="subtitle" *ngIf="showIntro">Ok, ok, we just support the King James Version for now... Maybe that will change someday...</h3>
@@ -35,7 +36,7 @@
 <mat-divider></mat-divider>
 
 <div class="results mat-typography" *ngIf="results.length > 0">
-  <virtual-scroll [items]="results" [childHeight]="43" (update)="viewPortItems = $event" (change)="indices = $event">
+  <virtual-scroll [items]="results" [childHeight]="virtualHeight" (update)="viewPortItems = $event" (change)="indices = $event">
     <mat-accordion [multi]="'true'">
       <mat-expansion-panel *ngFor="let refVerse of viewPortItems" [expanded]="refVerse.expanded">
         <mat-expansion-panel-header>

@@ -13,7 +13,6 @@
 }
 
 .form-wrapper {
-    margin-bottom: 20px;
     > * {
         display: inline-block;
     }
@@ -47,8 +46,8 @@
 }
 
 virtual-scroll {
-    height: calc(100vh - 187px);
+    height: calc(100vh - 167px);
     @media all and (min-width: 600px) {
-        height: calc(100vh - 195px);
+        height: calc(100vh - 175px);
     }
 }

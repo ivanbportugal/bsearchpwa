@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 import 'rxjs/add/operator/debounceTime';
@@ -12,6 +12,8 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { BibleSearchService, RefVerse } from './bible-search-service/bible-search.service';
 
+import { VirtualScrollComponent } from 'angular2-virtual-scroll';
+
 @Component({
   selector: 'bspwa-root',
   templateUrl: './app.component.html',
@@ -23,9 +25,6 @@ export class AppComponent implements OnInit {
 
   lastSearch: string = '';
 
-  // searchText: string = "";
-  // searchTextControl = new FormControl('', [Validators.minLength(3), Validators.maxLength(40)]);
-
   // Chips
   separatorKeysCodes = [ENTER, COMMA];
   searchChips = new Array<any>();
@@ -33,9 +32,10 @@ export class AppComponent implements OnInit {
   // Results
   results: RefVerse[] = [];
 
-  // resultsRaw: RefVerse[] = [];
-
-  // maxRenderCount: number = 500;
+  // Virtual Scroll item height varies if everything is collapsed vs expanded
+  // @ViewChild(VirtualScrollComponent)
+  // private virtualScroll: VirtualScrollComponent;
+  virtualHeight: number = 43;
 
   constructor(
     public searchService: BibleSearchService,
@@ -57,11 +57,11 @@ export class AppComponent implements OnInit {
       .subscribe(data => {
         this.results = this.setReferenceSummary(data);
         this.highlightSearchTextInResults();
-        this.snackBar.open(data.length + ' results', null, {
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          duration: 3000
-        });
+        // this.snackBar.open(data.length + ' results', null, {
+        //   horizontalPosition: 'end',
+        //   verticalPosition: 'top',
+        //   duration: 3000
+        // });
       }, err => {
         this.snackBar.open(err.error, 'Search Error');
       });
@@ -137,19 +137,25 @@ export class AppComponent implements OnInit {
   }
 
   // Toggle Slider
-  toggleSlider(sliderState: MatSlideToggleChange) {
-    if (sliderState.checked) {
-      this.expandAll();
-    } else {
-      this.collapseAll();
-    }
-  }
+  // toggleSlider(sliderState: MatSlideToggleChange) {
+  //   if (sliderState.checked) {
+  //     this.expandAll();
+  //   } else {
+  //     this.collapseAll();
+  //   }
+  //   let that = this;
+  //   setTimeout(() => {
+  //     that.virtualScroll.refresh();
+  //   }, 500);
+  // }
 
-  private expandAll() {
-    this.results.forEach(result => result.expanded = true);
-  }
+  // private expandAll() {
+  //   this.results.forEach(result => result.expanded = true);
+  //   this.virtualHeight = 48;
+  // }
 
-  private collapseAll() {
-    this.results.forEach(result => result.expanded = false);
-  }
+  // private collapseAll() {
+  //   this.results.forEach(result => result.expanded = false);
+  //   this.virtualHeight = 200;
+  // }
 }
